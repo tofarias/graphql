@@ -1,14 +1,26 @@
 const { ApolloServer, gql } = require ('apollo-server')
 
-const typeDefs = gql``
+const typeDefs = gql`
 
-const resolvers = { }
+    # Pontos de entrada da sua API!
+    type Query{
+        ola: String!
+    }
+`
+
+const resolvers = {
+    Query: {
+        ola(){
+            return 'Oi Tiago'
+        }
+    }
+ }
 
 const server = new ApolloServer({
     typeDefs,
     resolvers
 })
 
-server.listem().then(({ url }) => {
+server.listen().then(({ url }) => {
     console.log(`Executando em ${url}`)
 })
