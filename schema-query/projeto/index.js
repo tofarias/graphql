@@ -17,6 +17,11 @@ const usuarios = [{
     idade: 26
 }]
 
+const perfis = [
+    {id: 1, nome: 'comum' },
+    {id: 2, nome: 'administrador' }
+]
+
 const typeDefs = gql`
 
     scalar Date
@@ -26,6 +31,11 @@ const typeDefs = gql`
         preco: Float!
         desconto: Float
         precoComDesconto: Float
+    }
+
+    type Perfil {
+        id: Int
+        nome: String
     }
 
     type Usuario{
@@ -46,6 +56,8 @@ const typeDefs = gql`
         numerosMegaSena: [Int!]!
         usuarios: [Usuario]
         usuario(id: Int): Usuario
+        perfis: [Perfil]
+        perfil(id: Int): Perfil
     }
 `
 
@@ -97,6 +109,13 @@ const resolvers = {
         },
         usuario(_,args){
             const selecionados = usuarios.filter(u => u.id === args.id)
+            return selecionados ? selecionados[0] : null
+        },
+        perfis(){
+            return perfis
+        },
+        perfil(_, args){
+            const selecionados = perfis.filter(p => p.id === args.id)
             return selecionados ? selecionados[0] : null
         }
     }
