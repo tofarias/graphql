@@ -4,6 +4,13 @@ const typeDefs = gql`
 
     scalar Date
 
+    type Produto{
+        nome: String!
+        preco: Float!
+        desconto: Float
+        precoComDesconto: Float
+    }
+
     type Usuario{
         id: ID!
         nome: String!
@@ -18,6 +25,7 @@ const typeDefs = gql`
         ola: String!
         horaAtual: Date!
         usuarioLogado: Usuario
+        prdutoEmDestaque: Produto
     }
 `
 
@@ -26,6 +34,11 @@ const resolvers = {
     Usuario:{
         salario(usuario){
             return usuario.salario_real
+        }
+    },
+    Produto:{
+        precoComDesconto(produto){
+            return produto.preco - produto.desconto
         }
     },
     Query: {
@@ -43,6 +56,13 @@ const resolvers = {
                 idade: 23,
                 salario_real: 4520,
                 vip: true
+            }
+        },
+        prdutoEmDestaque(){
+            return {
+                nome: 'Todinho',
+                preco: 4.60,
+                desconto: 0.01
             }
         }
     }
