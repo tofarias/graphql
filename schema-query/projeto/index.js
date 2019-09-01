@@ -4,17 +4,20 @@ const usuarios = [{
     id: 1,
     nome: 'John Doe',
     email: 'jd@email.com',
-    idade: 31
+    idade: 31,
+    perfil_id: 1
 },{
     id: 2,
     nome: 'Jane Doe',
     email: 'jnd@email.com',
-    idade: 38
+    idade: 38,
+    perfil_id: 2
 },{
     id: 3,
     nome: 'Martin Doe',
     email: 'md@email.com',
-    idade: 26
+    idade: 26,
+    perfil_id: 1
 }]
 
 const perfis = [
@@ -44,7 +47,8 @@ const typeDefs = gql`
         email: String!
         idade: Int
         salario: Float
-        vip: Boolean
+        vip: Boolean,
+        perfil: Perfil
     }
 
     # Pontos de entrada da sua API!
@@ -66,6 +70,10 @@ const resolvers = {
     Usuario:{
         salario(usuario){
             return usuario.salario_real
+        },
+        perfil(usuario){
+            const selecionados = perfis.filter(p => p.id === usuario.perfil_id)
+            return selecionados ? selecionados[0] : null
         }
     },
     Produto:{
@@ -121,10 +129,7 @@ const resolvers = {
     }
  }
 
-const server = new ApolloServer({
-    typeDefs,
-    resolvers
-})
+const server = new ApolloServer({typeDefs,resolvers})
 
 server.listen().then(({ url }) => {
     console.log(`Executando em ${url}`)
