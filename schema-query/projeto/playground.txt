@@ -1,0 +1,60 @@
+# http://localhost:4000/
+
+# Write your query or mutation here
+{
+  # ola
+  #horaAtual
+  # usuarioLogado {
+  #   id
+  #   #idade
+  #   #nome
+  #   #email
+  #   salario
+  #   vip
+  # }
+  # prdutoEmDestaque{
+  #   nome
+  #   precoComDesconto
+  # }
+  # numerosMegaSena
+  # usuarios{
+  #   id
+  #   nome
+  #   email
+  # }
+  # usuario(id: 2){
+  #   nome id
+  # }
+  # perfis{
+  #   id nome
+  # }
+  # perfil(id: 1){
+  #   nome
+  # }
+  # usuarios{
+  #   id
+  #   nome
+  #   perfil{
+  #     id
+  #     nome
+  #   }
+  # }
+  # usuario(id: 3){
+  #   ...usuarioCompleto
+  # }
+
+  usuarios {
+    ...usuarioCompleto
+  }
+}
+
+fragment usuarioCompleto on Usuario {
+  id
+  nome
+  email
+  idade
+  vip
+  perfil {
+    nome
+  }
+}
